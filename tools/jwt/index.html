@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JWT Decoder | DevTools Hub</title>
+    <meta name="description" content="Decode and validate JWT tokens. 100% client-side processing - tokens never leave your browser.">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/tools.css">
+    <link rel="icon" href="image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔐</text></svg>">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+</head>
+<body>
+    <header class="bg-dark text-white py-3">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="/" class="text-white text-decoration-none d-flex align-items-center">
+                    <span class="fs-5 me-2">←</span>
+                    <span>DevTools Hub</span>
+                </a>
+                <div class="d-flex gap-3">
+                    <a href="https://github.com/yourusername/devtools-hub" class="text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="d-flex align-items-center mb-4">
+                    <div class="tool-icon bg-warning text-dark me-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-shield-lock" viewBox="0 0 16 16">
+                            <path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 2.148-.588 3.307.127 4.337A12 12 0 0 0 4.25 8.143c.06.244.03.498-.054.748a11 11 0 0 1-.25 1.285c-.599.98-1.915 2.51-3.331 4.026-1.278 1.37-2.01 2.455-2.152 2.715a.06.06 0 0 0 .005.079.06.06 0 0 0 .035.017c.018 0 .044-.003.057-.03.07-.14 1.172-2.36 2.972-5.144C2.676 9.754 4.5 7.57 5.03 5.995a12 12 0 0 1 .585-1.347c.266-.492.433-.653.477-.69C5.955 4.06 6.33 3.05 7.2 2.03c.686-.797 1.273-1.424 1.56-1.735a.06.06 0 0 1 .077-.006c.194.123.381.308.55.498.158.198.244.325.348.658.117.379.197.658.386 1.116.21.51.51.87.87.961.205.048.32.048.398.007a8 8 0 0 0-2.43-1.995M14.22 12c-.03.001-.062.002-.094.002-.394 0-.788-.035-1.182-.108-2.192-.412-4.418-1.001-6.372-1.704C4.655 9.884 3.16 9.4 1.948 9.058c-.5.138-1.237.22-2.542.22.138.37.293.74.465 1.11.16.35 1.24.82 2.833 1.394 3.062 1.126 6.627 1.917 9.58 2.247q.166.018.331.035c1.66.148 2.85.114 3.48-.015.21-.043.42-.13.56-.27.138-.13.24-.298.3-.453.084-.209.118-.38.175-.645.072-.334.093-.695.06-1.036.043-.01.087-.02.13-.03z"/>
+                            <path d="M9 12.5a3.5 3.5 0 1 1 2.477-6.05l.596.609a2.5 2.5 0 0 0-3.58 3.572l-.597-.608zm1.06-3.05a2 2 0 1 0 .566 1.134L9 13l-.825-.456a2 2 0 0 0 .691-3.49z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="h2 mb-0">JWT Decoder</h1>
+                        <p class="text-muted mb-0">Decode and validate JWT tokens (100% client-side)</p>
+                    </div>
+                </div>
+
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <div class="alert alert-light border border-warning mb-3">
+                            <small class="fw-bold">🔒 Security Note:</small><br>
+                            <small>All decoding happens in your browser. Tokens are NEVER sent to our server.</small>
+                        </div>
+                        <textarea id="jwtInput" class="form-control mb-3" rows="3" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.xxxxx.yyyyy">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE1MTYyNDI2MjJ9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</textarea>
+                        <div class="d-grid gap-2 mb-3">
+                            <button id="decodeJwtBtn" class="btn btn-warning fw-bold">🔍 Decode Token</button>
+                        </div>
+                        
+                        <div id="jwtError" class="alert alert-danger d-none mb-3 p-2"></div>
+                        
+                        <!-- Header Section -->
+                        <div id="jwtHeaderSection" class="mb-3 p-3 bg-light border rounded d-none">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="fw-bold mb-0 text-primary">Header</h6>
+                                <button class="btn btn-sm btn-outline-primary copy-btn" data-target="jwtHeader">📋 Copy</button>
+                            </div>
+                            <pre id="jwtHeader" class="mb-0" style="white-space: pre-wrap; font-size: 0.875rem;"></pre>
+                        </div>
+                        
+                        <!-- Payload Section -->
+                        <div id="jwtPayloadSection" class="p-3 bg-light border rounded d-none">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="fw-bold mb-0 text-success">Payload</h6>
+                                <button class="btn btn-sm btn-outline-success copy-btn" data-target="jwtPayload">📋 Copy</button>
+                            </div>
+                            <pre id="jwtPayload" class="mb-0" style="white-space: pre-wrap; font-size: 0.875rem;"></pre>
+                            
+                            <div id="jwtValidation" class="mt-2 pt-2 border-top">
+                                <small id="expStatus" class="d-block"></small>
+                                <small id="nbfStatus" class="d-block"></small>
+                                <small id="iatStatus" class="d-block"></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-light border border-warning">
+                    <h3 class="h5 mb-3 d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-shield-check me-2" viewBox="0 0 16 16">
+                            <path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 2.148-.588 3.307.127 4.337A12 12 0 0 0 4.25 8.143c.06.244.03.498-.054.748a11 11 0 0 1-.25 1.285c-.599.98-1.915 2.51-3.331 4.026-1.278 1.37-2.01 2.455-2.152 2.715a.06.06 0 0 0 .005.079.06.06 0 0 0 .035.017c.018 0 .044-.003.057-.03.07-.14 1.172-2.36 2.972-5.144C2.676 9.754 4.5 7.57 5.03 5.995a12 12 0 0 1 .585-1.347c.266-.492.433-.653.477-.69C5.955 4.06 6.33 3.05 7.2 2.03c.686-.797 1.273-1.424 1.56-1.735a.06.06 0 0 1 .077-.006c.194.123.381.308.55.498.158.198.244.325.348.658.117.379.197.658.386 1.116.21.51.51.87.87.961.205.048.32.048.398.007a8 8 0 0 0-2.43-1.995M14.22 12c-.03.001-.062.002-.094.002-.394 0-.788-.035-1.182-.108-2.192-.412-4.418-1.001-6.372-1.704C4.655 9.884 3.16 9.4 1.948 9.058c-.5.138-1.237.22-2.542.22.138.37.293.74.465 1.11.16.35 1.24.82 2.833 1.394 3.062 1.126 6.627 1.917 9.58 2.247q.166.018.331.035c1.66.148 2.85.114 3.48-.015.21-.043.42-.13.56-.27.138-.13.24-.298.3-.453.084-.209.118-.38.175-.645.072-.334.093-.695.06-1.036.043-.01.087-.02.13-.03z"/>
+                            <path d="M9 12.5a3.5 3.5 0 1 1 2.477-6.05l.596.609a2.5 2.5 0 0 0-3.58 3.572l-.597-.608zm1.06-3.05a2 2 0 1 0 .566 1.134L9 13l-.825-.456a2 2 0 0 0 .691-3.49z"/>
+                        </svg>
+                        Security Information
+                    </h3>
+                    <ul>
+                        <li>All JWT decoding happens entirely in your browser</li>
+                        <li>Tokens are NEVER sent to any server - not even ours</li>
+                        <li>Decoding is done using pure JavaScript with no external dependencies</li>
+                        <li>Expiration times are validated against your local system time</li>
+                        <li>No tracking, no analytics, no cookies</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <h3 class="h5 mb-3 d-flex align-items-center">
+                        <span class="me-2">🔧</span>DevTools Hub
+                    </h3>
+                    <p class="text-muted">Free, open-source developer tools for everyday tasks. All processing happens in your browser.</p>
+                </div>
+                <div class="col-md-6">
+                    <div class="d-flex justify-content-md-end">
+                        <a href="/" class="btn btn-outline-light">← Back to Tools</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 text-center text-muted">
+                    <small>© 2026 DevTools Hub. All tools run entirely in your browser. No data is ever sent to servers.</small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+    <script src="../../assets/js/jwt.js"></script>
+</body>
+</html>

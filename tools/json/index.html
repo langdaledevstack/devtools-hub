@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Formatter | DevTools Hub</title>
+    <meta name="description" content="Validate, format, and minify JSON with syntax highlighting. 100% client-side processing.">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/tools.css">
+    <link rel="icon" href="image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧾</text></svg>">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+</head>
+<body>
+    <header class="bg-dark text-white py-3">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="/" class="text-white text-decoration-none d-flex align-items-center">
+                    <span class="fs-5 me-2">←</span>
+                    <span>DevTools Hub</span>
+                </a>
+                <div class="d-flex gap-3">
+                    <a href="https://github.com/yourusername/devtools-hub" class="text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="d-flex align-items-center mb-4">
+                    <div class="tool-icon bg-info text-white me-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-file-earmark-code" viewBox="0 0 16 16">
+                            <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
+                            <path d="M8.646 6.646a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L10.293 9 8.646 7.354a.5.5 0 0 1 0-.708zm-2.292 0a.5.5 0 0 0-.708 0l-2 2a.5.5 0 0 0 0 .708l2 2a.5.5 0 0 0 .708-.708L6.707 9 8.354 7.354a.5.5 0 0 0 0-.708z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="h2 mb-0">JSON Formatter & Validator</h1>
+                        <p class="text-muted mb-0">Validate, format, and minify JSON with syntax highlighting</p>
+                    </div>
+                </div>
+
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <textarea id="jsonInput" class="form-control mb-3" rows="6" placeholder='{"name": "John", "age": 30, "city": "New York"}'>{"username":"dev_user","active":true,"roles":["admin","editor"],"settings":{"theme":"dark","notifications":true}}</textarea>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+                            <button id="minifyJsonBtn" class="btn btn-outline-secondary me-md-2">Minify</button>
+                            <button id="formatJsonBtn" class="btn btn-info">✨ Format & Validate</button>
+                        </div>
+                        
+                        <div id="jsonError" class="alert alert-danger d-none mb-3 p-2"></div>
+                        
+                        <div id="jsonResult" class="p-3 bg-dark text-white rounded d-none">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <small class="text-muted">Formatted JSON</small>
+                                <button class="btn btn-sm btn-outline-light copy-btn" data-target="jsonOutput">📋 Copy</button>
+                            </div>
+                            <pre id="jsonOutput" class="mb-0" style="white-space: pre-wrap; word-break: break-word; line-height: 1.5;"></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-light border border-info">
+                    <h3 class="h5 mb-3 d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-info-circle me-2" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.296.07.362.176.248.477l-.07.387.007.002a.5.5 0 0 1-.454.596H6.691l-1.246.025a.5.5 0 0 1-.5-.5V8.438c0-.15.055-.294.16-.401.387-.386.732-.79.746-1.41.006-.25.12-.628.332-.918C5.86 5.132 6.45 4.66 7.194 4.5c.744-.16 1.334.308 1.794 1.094Zm-1.39 1.383.01.082a.5.5 0 0 1-.912.287l-.01-.082-.001-.006-.007-.061c-.041-.32-.242-.61-.578-.61-.275 0-.49.24-.554.477l-.007.028v.81a.5.5 0 0 1-1 0v-.6a1.5 1.5 0 0 1 .538-1.11l.055-.04A1.5 1.5 0 0 1 8 4.5c.39 0 .74.17 1.005.435.28.28.44 1.017.44 1.81v.81a.5.5 0 1 1-1 0v-.6a.5.5 0 0 0-.146-.354c-.075-.078-.176-.144-.293-.17l-.024-.005-.093-.015-.075-.01h-.013c-.236-.002-.463.116-.56.31l-.01.022-.03.07-.02.055-.008.026-.003.01c-.014.056-.24.78-.24 1.42v.41l.265.047c.565.101.935.665.935 1.353 0 .814-.38 1.335-.92 1.335-.193 0-.372-.064-.52-.176a.5.5 0 0 1 .757-.657c.08.092.183.144.303.144.26 0 .46-.224.46-.627 0-.69-.37-1.253-.935-1.353l-.265-.047v-.41c0-.41.164-.753.44-.94l.017-.01.083-.047c.168-.095.368-.143.58-.143.53 0 .92-.523.92-1.337 0-.818-.39-1.34-1.01-1.34-.204 0-.405.05-.59.143l-.025.012-.076.036a1.5 1.5 0 0 0-.815.823.5.5 0 0 1-.975-.21c.023-.105.098-.39.385-1.01.262-.568.67-.99 1.195-1.075C7.72 4 8.16 4 8.5 4c.65 0 1.2.38 1.48 1 .26.56.4 1.47.4 2.23v.66c0 .668.328 1.258.845 1.63l.045.03c.5.35.755.95.755 1.61 0 1.11-.7 2-1.9 2-.95 0-1.755-.66-1.938-1.53l-.02-.094a.5.5 0 0 1 .98-.208c.12.565.807 1.03 1.428 1.03.52 0 .94-.31.94-.87 0-.69-.47-1.23-1.01-1.34l-.264-.052v-.76c0-.52.2-.98.53-1.3z"/>
+                        </svg>
+                        How to Use
+                    </h3>
+                    <ul>
+                        <li>Paste your JSON in the input area</li>
+                        <li>Click "Format & Validate" to pretty-print with syntax highlighting</li>
+                        <li>Click "Minify" to compress for production use</li>
+                        <li>Use the copy button to save the formatted JSON</li>
+                        <li>Errors will show if your JSON is invalid</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <h3 class="h5 mb-3 d-flex align-items-center">
+                        <span class="me-2">🔧</span>DevTools Hub
+                    </h3>
+                    <p class="text-muted">Free, open-source developer tools for everyday tasks. All processing happens in your browser.</p>
+                </div>
+                <div class="col-md-6">
+                    <div class="d-flex justify-content-md-end">
+                        <a href="/" class="btn btn-outline-light">← Back to Tools</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 text-center text-muted">
+                    <small>© 2026 DevTools Hub. All tools run entirely in your browser. No data is ever sent to servers.</small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+    <script src="../../assets/js/json.js"></script>
+</body>
+</html>
