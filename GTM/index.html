@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTM Consent Tester</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border: #e5e7eb;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+            text-align: center;
+        }
+
+        p.subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .master-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            background: #f8fafc;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .consent-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .consent-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .consent-item:last-child {
+            border-bottom: none;
+        }
+
+        .consent-label {
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        /* Toggle Switch CSS */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px var(--primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 2rem;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-submit {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-delete {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background-color: #dc2626;
+        }
+
+        .status-box {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            word-break: break-all;
+            display: none; /* Hidden by default */
+            white-space: pre-wrap;
+        }
+        
+        .status-box.visible {
+            display: block;
+        }
+
+        .gtm-placeholder {
+            margin-top: 2rem;
+            padding: 1rem;
+            border: 2px dashed var(--border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>GTM Consent Tester</h1>
+        <p class="subtitle">Configure consent settings and generate the test cookie.</p>
+
+        <!-- Master Controls -->
+        <div class="master-controls">
+            <span style="font-weight: 600; font-size: 0.9rem;">Global Control</span>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="setAll(true)" style="padding: 4px 10px; font-size: 0.8rem; width: auto; flex: none;">Select All</button>
+                <button onclick="setAll(false)" style="padding: 4px 10px; font-size: 0.8rem; width: auto; flex: none; background-color: #e5e7eb; color: #333;">Deselect All</button>
+            </div>
+        </div>
+
+        <!-- Consent Sliders -->
+        <div class="consent-list">
+            <div class="consent-item">
+                <span class="consent-label">ad_storage</span>
+                <label class="switch">
+                    <input type="checkbox" class="consent-check" data-key="ad_storage" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="consent-item">
+                <span class="consent-label">analytics_storage</span>
+                <label class="switch">
+                    <input type="checkbox" class="consent-check" data-key="analytics_storage" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="consent-item">
+                <span class="consent-label">ad_user_data</span>
+                <label class="switch">
+                    <input type="checkbox" class="consent-check" data-key="ad_user_data" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="consent-item">
+                <span class="consent-label">personalization_storage</span>
+                <label class="switch">
+                    <input type="checkbox" class="consent-check" data-key="personalization_storage" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="consent-item">
+                <span class="consent-label">ad_personalization</span>
+                <label class="switch">
+                    <input type="checkbox" class="consent-check" data-key="ad_personalization" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="consent-item">
+                <span class="consent-label">functionality_storage</span>
+                <label class="switch">
+                    <input type="checkbox" class="consent-check" data-key="functionality_storage" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="consent-item">
+                <span class="consent-label">security_storage</span>
+                <label class="switch">
+                    <input type="checkbox" class="consent-check" data-key="security_storage" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="button-group">
+            <button class="btn-delete" onclick="deleteCookies()">Delete Cookies</button>
+            <button class="btn-submit" onclick="submitConsent()">Submit & Set Cookie</button>
+        </div>
+
+        <!-- Debug Output -->
+        <div id="statusOutput" class="status-box"></div>
+
+        <!-- GTM Placeholder -->
+        <div class="gtm-placeholder">
+            <!-- Google Tag Manager Code Placeholder -->
+            <!-- Paste your GTM snippet here -->
+        </div>
+    </div>
+
+    <script>
+        // 1. Helper to toggle all switches
+        function setAll(state) {
+            const checkboxes = document.querySelectorAll('.consent-check');
+            checkboxes.forEach(cb => {
+                cb.checked = state;
+            });
+        }
+
+        // 2. Main function to create/update cookie
+        function submitConsent() {
+            const cookieName = "SyrenisGtmConsent_4b022dd9-a39b-4e94-8b6b-32108b95bbaf";
+            const checkboxes = document.querySelectorAll('.consent-check');
+            let consentParts = [];
+
+            // Build the pipe-separated string
+            checkboxes.forEach(cb => {
+                const key = cb.getAttribute('data-key');
+                const value = cb.checked ? "granted" : "denied";
+                consentParts.push(`${key}:${value}`);
+            });
+
+            // Join with pipe
+            const consentValue = consentParts.join("|");
+
+            // Determine domain logic
+            let domainString = "";
+            if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+                domainString = "domain=127.0.0.1;";
+            } else {
+                // For GitHub pages, omitting domain sets it for the current subdomain
+                domainString = ""; 
+            }
+
+            // Set Cookie
+            // Note: We do not encode the pipes or colons to match the requested raw format
+            document.cookie = `${cookieName}=${consentValue}; ${domainString} path=/; SameSite=Lax`;
+
+            // Show feedback
+            const statusBox = document.getElementById('statusOutput');
+            statusBox.innerHTML = `<strong>Cookie Set:</strong><br>Name: ${cookieName}<br>Value:<br>${consentValue}`;
+            statusBox.classList.add('visible');
+            statusBox.style.color = "var(--text-main)";
+            
+            console.log("Consent Cookie Updated:", consentValue);
+        }
+
+        // 3. Function to delete cookies
+        function deleteCookies() {
+            const cookieName = "SyrenisGtmConsent_4b022dd9-a39b-4e94-8b6b-32108b95bbaf";
+            
+            // Delete specific cookie
+            document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+            
+            // Show feedback
+            const statusBox = document.getElementById('statusOutput');
+            statusBox.innerHTML = `<strong>Success:</strong> Cookies deleted. Please refresh page to verify.`;
+            statusBox.classList.add('visible');
+            statusBox.style.color = "var(--danger)";
+            
+            console.log("Cookies Deleted");
+        }
+    </script>
+</body>
+</html>
