@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -123,15 +124,15 @@
             border-radius: 50%;
         }
 
-        input:checked + .slider {
+        input:checked+.slider {
             background-color: var(--primary);
         }
 
-        input:focus + .slider {
+        input:focus+.slider {
             box-shadow: 0 0 1px var(--primary);
         }
 
-        input:checked + .slider:before {
+        input:checked+.slider:before {
             transform: translateX(24px);
         }
 
@@ -178,10 +179,11 @@
             font-family: monospace;
             font-size: 0.8rem;
             word-break: break-all;
-            display: none; /* Hidden by default */
+            display: none;
+            /* Hidden by default */
             white-space: pre-wrap;
         }
-        
+
         .status-box.visible {
             display: block;
         }
@@ -196,6 +198,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="container">
@@ -206,8 +209,11 @@
         <div class="master-controls">
             <span style="font-weight: 600; font-size: 0.9rem;">Global Control</span>
             <div style="display: flex; gap: 10px;">
-                <button onclick="setAll(true)" style="padding: 4px 10px; font-size: 0.8rem; width: auto; flex: none;">Select All</button>
-                <button onclick="setAll(false)" style="padding: 4px 10px; font-size: 0.8rem; width: auto; flex: none; background-color: #e5e7eb; color: #333;">Deselect All</button>
+                <button onclick="setAll(true)"
+                    style="padding: 4px 10px; font-size: 0.8rem; width: auto; flex: none;">Select All</button>
+                <button onclick="setAll(false)"
+                    style="padding: 4px 10px; font-size: 0.8rem; width: auto; flex: none; background-color: #e5e7eb; color: #333;">Deselect
+                    All</button>
             </div>
         </div>
 
@@ -275,8 +281,21 @@
 
         <!-- GTM Placeholder -->
         <div class="gtm-placeholder">
-            <!-- Google Tag Manager Code Placeholder -->
-            <!-- Paste your GTM snippet here -->
+            <!-- Google Tag Manager -->
+            <script>
+                (function (w, d, s, l, i) {
+                    w[l] = w[l] || [];
+                    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+                    var f = d.getElementsByTagName(s)[0],
+                        j = d.createElement(s),
+                        dl = l != "dataLayer" ? "&l=" + l : "";
+                    j.async = true;
+                    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+                    f.parentNode.insertBefore(j, f);
+                })(window, document, "script", "dataLayer", "GTM-TSPDXKPH");
+            </script>
+            <!-- End Google Tag Manager -->
+
         </div>
     </div>
 
@@ -311,7 +330,7 @@
                 domainString = "domain=127.0.0.1;";
             } else {
                 // For GitHub pages, omitting domain sets it for the current subdomain
-                domainString = ""; 
+                domainString = "";
             }
 
             // Set Cookie
@@ -323,25 +342,26 @@
             statusBox.innerHTML = `<strong>Cookie Set:</strong><br>Name: ${cookieName}<br>Value:<br>${consentValue}`;
             statusBox.classList.add('visible');
             statusBox.style.color = "var(--text-main)";
-            
+
             console.log("Consent Cookie Updated:", consentValue);
         }
 
         // 3. Function to delete cookies
         function deleteCookies() {
             const cookieName = "SyrenisGtmConsent_4b022dd9-a39b-4e94-8b6b-32108b95bbaf";
-            
+
             // Delete specific cookie
             document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-            
+
             // Show feedback
             const statusBox = document.getElementById('statusOutput');
             statusBox.innerHTML = `<strong>Success:</strong> Cookies deleted. Please refresh page to verify.`;
             statusBox.classList.add('visible');
             statusBox.style.color = "var(--danger)";
-            
+
             console.log("Cookies Deleted");
         }
     </script>
 </body>
+
 </html>
